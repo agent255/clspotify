@@ -104,7 +104,7 @@ def get_song_duration(song_id: str) -> float:
 
 
 # noinspection PyBroadException
-def download_track(mode: str, track_id: str, extra_keys=None, disable_progressbar=False) -> None:
+def download_track(mode: str, track_id: str, extra_keys=None, disable_progressbar=False) -> str:
     """ Downloads raw song audio from Spotify """
 
     if extra_keys is None:
@@ -112,6 +112,8 @@ def download_track(mode: str, track_id: str, extra_keys=None, disable_progressba
 
     prepare_download_loader = Loader(PrintChannel.PROGRESS_INFO, "Preparing download...")
     prepare_download_loader.start()
+
+    filename = None
 
     try:
         output_template = ZSpotify.CONFIG.get_output(mode)
@@ -247,6 +249,7 @@ def download_track(mode: str, track_id: str, extra_keys=None, disable_progressba
                 os.remove(filename_temp)
 
     prepare_download_loader.stop()
+    return filename
 
 
 def convert_audio_format(filename) -> None:
