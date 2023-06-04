@@ -149,8 +149,8 @@ def download_track(mode: str, track_id: str, extra_keys=None, disable_progressba
         check_id = scraped_song_id in get_directory_song_ids(filedir)
         check_all_time = scraped_song_id in get_previously_downloaded()
 
-        # a song with the same name is installed
-        if not check_id and check_name:
+        # a file with the same name exists in the directory, but song not in the downloaded songs list
+        if not check_id and check_name and not ZSpotify.CONFIG.get_skip_existing_any_origin():
             c = len([file for file in os.listdir(filedir) if re.search(f'^{filename}_', str(file))]) + 1
 
             fname = os.path.splitext(os.path.basename(filename))[0]
@@ -176,6 +176,10 @@ def download_track(mode: str, track_id: str, extra_keys=None, disable_progressba
                 if check_id and check_name and ZSpotify.CONFIG.get_skip_existing_files():
                     prepare_download_loader.stop()
                     Printer.print(PrintChannel.SKIPS, '\n###   SKIPPING: ' + song_name + ' (SONG ALREADY EXISTS)   ###' + "\n")
+
+                elif check_name and ZSpotify.CONFIG.get_skip_existing_any_origin():
+                    prepare_download_loader.stop()
+                    Printer.print(PrintChannel.SKIPS, '\n###   SKIPPING: ' + song_name + ' (SONG ALREADY EXISTS BUT WAS NOT DOWNLOADED WITH CLSPOTIFY)   ###' + "\n")
 
                 elif check_all_time and ZSpotify.CONFIG.get_skip_previously_downloaded():
                     prepare_download_loader.stop()

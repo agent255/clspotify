@@ -8,6 +8,7 @@ ROOT_PATH = 'ROOT_PATH'
 ROOT_PODCAST_PATH = 'ROOT_PODCAST_PATH'
 SKIP_EXISTING_FILES = 'SKIP_EXISTING_FILES'
 SKIP_PREVIOUSLY_DOWNLOADED = 'SKIP_PREVIOUSLY_DOWNLOADED'
+SKIP_EXISTING_ANY_ORIGIN = 'SKIP_EXISTING_ANY_ORIGIN'
 DOWNLOAD_FORMAT = 'DOWNLOAD_FORMAT'
 FORCE_PREMIUM = 'FORCE_PREMIUM'
 ANTI_BAN_WAIT_TIME = 'ANTI_BAN_WAIT_TIME'
@@ -38,6 +39,7 @@ CONFIG_VALUES = {
     ROOT_PODCAST_PATH:          { 'default': '../ZSpotify Podcasts/', 'type': str,  'arg': '--root-podcast-path'          },
     SKIP_EXISTING_FILES:        { 'default': 'True',                  'type': bool, 'arg': '--skip-existing-files'        },
     SKIP_PREVIOUSLY_DOWNLOADED: { 'default': 'False',                 'type': bool, 'arg': '--skip-previously-downloaded' },
+    SKIP_EXISTING_ANY_ORIGIN:   {'default': 'True',                   'type': bool, 'arg': '--skip-existing-any-origin'},
     RETRY_ATTEMPTS:             { 'default': '5',                     'type': int,  'arg': '--retry-attemps'              },
     DOWNLOAD_FORMAT:            { 'default': 'ogg',                   'type': str,  'arg': '--download-format'            },
     FORCE_PREMIUM:              { 'default': 'False',                 'type': bool, 'arg': '--force-premium'              },
@@ -156,6 +158,10 @@ class Config:
     @classmethod
     def get_skip_previously_downloaded(cls) -> bool:
         return cls.get(SKIP_PREVIOUSLY_DOWNLOADED)
+
+    @classmethod
+    def get_skip_existing_any_origin(cls) -> bool:
+        return cls.get(SKIP_EXISTING_ANY_ORIGIN)
 
     @classmethod
     def get_split_album_discs(cls) -> bool:
